@@ -14,7 +14,7 @@
    is filled in automatically. (Leave blank to keep the HTML text.)
    ------------------------------------------------------------- */
 const CONFIG = {
-  friendName: "Your Friend's Name",
+  friendName: "Beninggg",
   yourName: "Your Name",
 };
 

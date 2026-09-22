@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>A Special Letter Just For You</title>
+  <meta name="description" content="A little letter of thanks to a wonderful friend." />
+  <meta name="theme-color" content="#2a0a10" />
+
+  <!-- Google Fonts: Cormorant Garamond (headings) · Jost (body) · Pinyon Script (handwritten accents) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Jost:wght@300;400;500&family=Pinyon+Script&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="is-locked">
+
+  <!-- =========================================================
+       SVG SPRITE — reusable flower & leaf shapes (used via <use>)
+       Colour each one with the CSS `color` property.
+       ========================================================= -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <defs>
+      <symbol id="flower" viewBox="0 0 100 100">
+        <g fill="currentColor">
+          <ellipse cx="50" cy="27" rx="15" ry="25" />
+          <ellipse cx="50" cy="27" rx="15" ry="25" transform="rotate(72 50 50)" />
+          <ellipse cx="50" cy="27" rx="15" ry="25" transform="rotate(144 50 50)" />
+          <ellipse cx="50" cy="27" rx="15" ry="25" transform="rotate(216 50 50)" />
+          <ellipse cx="50" cy="27" rx="15" ry="25" transform="rotate(288 50 50)" />
+        </g>
+        <g fill="#fff" fill-opacity=".28">
+          <ellipse cx="50" cy="33" rx="7" ry="15" />
+          <ellipse cx="50" cy="33" rx="7" ry="15" transform="rotate(72 50 50)" />
+          <ellipse cx="50" cy="33" rx="7" ry="15" transform="rotate(144 50 50)" />
+          <ellipse cx="50" cy="33" rx="7" ry="15" transform="rotate(216 50 50)" />
+          <ellipse cx="50" cy="33" rx="7" ry="15" transform="rotate(288 50 50)" />
+        </g>
+        <circle cx="50" cy="50" r="8" fill="#c9a15b" />
+        <circle cx="50" cy="50" r="3" fill="#8a6a2c" />
+      </symbol>
+
+      <symbol id="leaf" viewBox="0 0 60 100">
+        <path d="M30 2 C58 32 58 74 30 98 C2 74 2 32 30 2 Z" fill="currentColor" />
+        <path d="M30 14 V92" stroke="#fff" stroke-opacity=".35" stroke-width="2" fill="none" />
+      </symbol>
+
+      <symbol id="heart" viewBox="0 0 24 24">
+        <path d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 2.7 4.5 6.4 4.5c2.1 0 3.7 1.2 5.6 3.3 1.9-2.1 3.5-3.3 5.6-3.3 3.7 0 5.5 3.9 4 7.3C19.5 16.4 12 21 12 21z" fill="currentColor" />
+      </symbol>
+    </defs>
+  </svg>
+
+  <!-- =========================================================
+       1) OPENING SCREEN — the envelope
+       ========================================================= -->
+  <section id="envelope-screen" class="envelope-screen" aria-label="Envelope. Click the wax seal to open your letter.">
+    <div class="envelope-screen__inner">
+      <h1 class="envelope-title">
+        <span class="envelope-title__serif">A Special Letter</span>
+        <span class="envelope-title__script">Just for you</span>
+      </h1>
+
+      <div class="envelope" id="envelope">
+        <div class="env-back"></div>
+        <div class="env-flap"></div>
+        <div class="env-letter"><span>For my dear friend</span></div>
+        <div class="env-front"></div>
+
+        <!-- Wax seal (clickable) -->
+        <button class="wax-seal" id="wax-seal" type="button" aria-label="Break the wax seal to open the letter">
+          <span class="wax-seal__ring"></span>
+          <span class="wax-seal__pulse"></span>
+          <svg class="wax-seal__heart" viewBox="0 0 24 24"><use href="#heart" /></svg>
+        </button>
+
+        <!-- Floral corner accents -->
+        <svg class="env-flower env-flower--a" viewBox="0 0 100 100"><use href="#flower" /></svg>
+        <svg class="env-flower env-flower--b" viewBox="0 0 100 100"><use href="#flower" /></svg>
+        <svg class="env-leaf env-leaf--a" viewBox="0 0 60 100"><use href="#leaf" /></svg>
+        <svg class="env-leaf env-leaf--b" viewBox="0 0 60 100"><use href="#leaf" /></svg>
+      </div>
+
+      <button class="envelope-hint" id="open-btn" type="button">Click wax to open</button>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       MAIN CONTENT — hidden until the envelope is opened
+       ========================================================= -->
+  <main id="main" class="main" hidden>
+
+    <!-- 2) HEADER + MUSIC PLAYER ------------------------------------------ -->
+    <header class="hero section">
+      <div class="container hero__inner">
+        <p class="hero__pre reveal">To my wonderful friend,</p>
+        <!-- EDIT: change the name here (or in script.js CONFIG.friendName) -->
+        <h2 class="hero__name reveal" style="--d:.15s" data-friend-name>Your Friend's Name</h2>
+
+        <p class="hero__play reveal" style="--d:.3s">Play the music first, then read on</p>
+
+        <div class="player reveal" style="--d:.4s">
+          <!-- Decorative vinyl peeking out from behind the player -->
+          <div class="vinyl" aria-hidden="true"><span></span></div>
+          <div class="player__frame">
+            <!-- EDIT: swap the Spotify link for your own song.
+                 On Spotify: Share → Copy link → change "open.spotify.com/track/ID"
+                 to "open.spotify.com/embed/track/ID" -->
+            <iframe
+              title="Spotify player: Count on Me by Bruno Mars"
+              src="https://open.spotify.com/embed/track/0nJW01T7XtvILxQgC5J7Wh?utm_source=generator&theme=0"
+              width="100%" height="152" frameborder="0"
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+              loading="lazy"></iframe>
+          </div>
+        </div>
+
+        <div class="flourish reveal" style="--d:.5s" aria-hidden="true">
+          <span></span>
+          <svg viewBox="0 0 100 100"><use href="#flower" /></svg>
+          <span></span>
+        </div>
+      </div>
+    </header>
+
+    <!-- 3) THE LETTER ------------------------------------------------------ -->
+    <section class="section letter-section" id="letter">
+      <div class="container">
+        <h2 class="section-title reveal">A Letter For You</h2>
+
+        <article class="paper reveal" style="--d:.1s">
+          <!-- Stamp + postmark -->
+          <div class="stamp" aria-hidden="true">
+            <div class="stamp__inner">
+              <svg viewBox="0 0 24 24"><use href="#heart" /></svg>
+              <small>Friends</small>
+            </div>
+          </div>
+          <div class="postmark" aria-hidden="true"><span>Sent with<br />love</span></div>
+
+          <!-- Corner flowers -->
+          <svg class="paper__flower paper__flower--tl" viewBox="0 0 100 100" aria-hidden="true"><use href="#flower" /></svg>
+          <svg class="paper__flower paper__flower--bl" viewBox="0 0 100 100" aria-hidden="true"><use href="#flower" /></svg>
+
+          <div class="paper__body">
+            <!-- EDIT: write your own message. Each <p> is one paragraph. -->
+            <p class="paper__greeting">Dear <span data-friend-name>Your Friend's Name</span>,</p>
+
+            <p>
+              I don't say it nearly often enough, so I wanted to put it somewhere you can keep:
+              thank you. Thank you for being the kind of friend who shows up, whether it's with a
+              bad joke, a long talk, or simply sitting next to me when words aren't enough.
+            </p>
+            <p>
+              You have a way of making ordinary days feel lighter. The little things we share, like
+              the inside jokes, the late-night messages and the plans we never quite stick to, are
+              some of my favorite parts of life. You've listened when I needed to be heard, cheered
+              when I'd forgotten how, and stayed through the messy seasons too.
+            </p>
+            <p>
+              Whatever comes next, I hope you know you're never doing it alone. I'll be in your
+              corner, loudest cheerleader in the room, always. Please keep being exactly who you
+              are. The world is brighter with you in it.
+            </p>
+
+            <p class="paper__sign">
+              With all my heart,
+              <!-- EDIT: your name (or in script.js CONFIG.yourName) -->
+              <span class="paper__name" data-your-name>Your Name</span>
+            </p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- 4) PHOTO GALLERY --------------------------------------------------- -->
+    <section class="section gallery-section" id="memories">
+      <div class="container">
+        <h2 class="section-title reveal">Our Memories</h2>
+        <p class="section-sub reveal" style="--d:.1s">A few moments I'll always keep</p>
+
+        <!-- EDIT: replace each img src with your own photo (e.g. "images/beach.jpg")
+             and change the caption in <figcaption>. Add or remove <figure>s freely. -->
+        <div class="gallery">
+          <figure class="polaroid reveal" style="--r:-3deg; --d:.05s">
+            <div class="polaroid__photo">
+              <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=700&q=70" alt="Friends laughing together" loading="lazy" />
+            </div>
+            <figcaption>The day we couldn't stop laughing</figcaption>
+          </figure>
+
+          <figure class="polaroid reveal" style="--r:2.5deg; --d:.15s">
+            <div class="polaroid__photo">
+              <img src="https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?auto=format&fit=crop&w=700&q=70" alt="Friends walking outdoors" loading="lazy" />
+            </div>
+            <figcaption>Wandering with no plan</figcaption>
+          </figure>
+
+          <figure class="polaroid reveal" style="--r:-1.5deg; --d:.25s">
+            <div class="polaroid__photo">
+              <img src="https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=700&q=70" alt="Group of friends at sunset" loading="lazy" />
+            </div>
+            <figcaption>Golden hour, good company</figcaption>
+          </figure>
+
+          <figure class="polaroid reveal" style="--r:3deg; --d:.35s">
+            <div class="polaroid__photo">
+              <img src="https://images.unsplash.com/photo-1523301343968-6a6ebf63c672?auto=format&fit=crop&w=700&q=70" alt="Two friends hugging" loading="lazy" />
+            </div>
+            <figcaption>Hugs that say everything</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5) APPRECIATION CARDS --------------------------------------------- -->
+    <section class="section reasons-section" id="reasons">
+      <div class="container">
+        <h2 class="section-title reveal">Reasons Why You're Amazing</h2>
+
+        <!-- EDIT: change the text in each card, or duplicate a <li> to add more -->
+        <ul class="reasons">
+          <li class="reason reveal" style="--d:.05s">
+            <svg viewBox="0 0 100 100" aria-hidden="true"><use href="#flower" /></svg>
+            <p>You always know how to make me laugh</p>
+          </li>
+          <li class="reason reveal" style="--d:.12s">
+            <svg viewBox="0 0 100 100" aria-hidden="true"><use href="#flower" /></svg>
+            <p>You are an amazing listener</p>
+          </li>
+          <li class="reason reveal" style="--d:.19s">
+            <svg viewBox="0 0 100 100" aria-hidden="true"><use href="#flower" /></svg>
+            <p>You support me in everything</p>
+          </li>
+          <li class="reason reveal" style="--d:.26s">
+            <svg viewBox="0 0 100 100" aria-hidden="true"><use href="#flower" /></svg>
+            <p>You make even ordinary days feel special</p>
+          </li>
+          <li class="reason reveal" style="--d:.33s">
+            <svg viewBox="0 0 100 100" aria-hidden="true"><use href="#flower" /></svg>
+            <p>You tell me the truth, kindly</p>
+          </li>
+          <li class="reason reveal" style="--d:.4s">
+            <svg viewBox="0 0 100 100" aria-hidden="true"><use href="#flower" /></svg>
+            <p>You're there, no matter what</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 6) FOOTER / CLOSING ------------------------------------------------ -->
+    <footer class="section closing">
+      <div class="container closing__inner">
+        <div class="flourish reveal" aria-hidden="true">
+          <span></span>
+          <svg viewBox="0 0 100 100"><use href="#flower" /></svg>
+          <span></span>
+        </div>
+        <!-- EDIT: closing message -->
+        <p class="closing__thanks reveal" style="--d:.1s">
+          Thank you for reading until the end.<br />
+          I'm lucky to have you as a friend!
+        </p>
+        <p class="closing__script reveal" style="--d:.25s">See you in our next chapter ♡</p>
+      </div>
+    </footer>
+
+  </main>
+
+  <!-- Container for falling petals (filled by script.js after the envelope opens) -->
+  <div class="petals" id="petals" aria-hidden="true"></div>
+
+  <script src="script.js" defer></script>
+</body>
+</html>

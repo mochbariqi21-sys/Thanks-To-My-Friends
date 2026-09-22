@@ -15,7 +15,7 @@
    ------------------------------------------------------------- */
 const CONFIG = {
   friendName: "Beninggg",
-  yourName: "Your Name",
+  yourName: "Bariqii",
 };
 
 // Tells the CSS that JS is running (so .reveal elements can start hidden)
